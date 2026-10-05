@@ -78,30 +78,125 @@ summary(dt)
 Write a function that uses a for loop that, for each iteration, randomly draws 5 observations from an exponential distribution with "rate" parameter 1 (use `rexp()`) and calculates its "mean". It should do this 10,000 times. Choose an appropriate plot to plot the distribution of "means".
 
 - Solution: We want to fill a vector with values. We should create this vector beforehand using the `vector()` function.
+```{r}
+sample_means <- vector("double", 10000)
+```
+
 
 - We want to create a vector of size 10 and we want its values to be numeric.
 
 - Then we want to randomly draw 5 observations from an exponential distribution with "rate" parameter 1 (use `rexp(5, rate = 1)`) and calculates its "mean"
+```{r}
+for (i in seq_along(sample_means)) {
+  sample_means[i] <- mean(rexp(5, rate = 1))
+}
+```
+
 
 - Now we want to create a vector that has length of 10 and its values are mean of this randomly selected exponential functions
 
 - Now we want to draw the histogram. But we need to have a data frame. Let us define a data frame.
+```{r}
+means_df <- tibble(mean = sample_means)
+```
+
 
 - Now we can draw a histogram
+```{r}
+ggplot(means_df, aes(x = mean)) +
+  geom_histogram(bins = 30) +
+  labs(
+    title = "Distribution of Sample Means",
+    x = "Sample Mean",
+    y = "Frequency"
+  )
+```
+
 
   - **Now, let's solve the problem all in one step**
+```{r}
+for (i in seq_along(sample_means)) {
+  sample_means[i] <- mean(rexp(5, rate = 1))
+}
+
+means_df <- tibble(mean = sample_means)
+
+ggplot(means_df, aes(x = mean)) +
+  geom_histogram(bins = 30) +
+  labs(
+    title = "Distribution of Sample Means",
+    x = "Sample Mean",
+    y = "Frequency"
+  )
+```
 
 ## 2_a:
 
 - Repeat part 1 by using a `map_*()` function.
+```{r}
+sample_means_map <- map_dbl(
+  1:10000,
+  ~ mean(rexp(5, rate = 1))
+)
+
+map_df <- tibble(mean = sample_means_map)
+
+ggplot(map_df, aes(x = mean)) +
+  geom_histogram(bins = 30) +
+  labs(
+    title = "Distribution of Sample Means Using map_dbl()",
+    x = "Sample Mean",
+    y = "Frequency"
+  )
+```
+
 
 ## 2_b:
 
 - Repeat part 1 by using the `replicate()` function.
+```{r}
+sample_means_rep <- replicate(
+  10000,
+  mean(rexp(5, rate = 1))
+)
+
+rep_df <- tibble(mean = sample_means_rep)
+
+ggplot(rep_df, aes(x = mean)) +
+  geom_histogram(bins = 30) +
+  labs(
+    title = "Distribution of Sample Means Using replicate()",
+    x = "Sample Mean",
+    y = "Frequency"
+  )
+```
 
 ## 2_c:
 
 - Use a another for loop that will print out plots for sample sizes of 5, 10, and 20 observations (instead of just 5).
+```{r}
+sample_sizes <- c(5, 10, 20)
+
+for (n in sample_sizes) {
+  
+  sample_means <- replicate(
+    10000,
+    mean(rexp(n, rate = 1))
+  )
+  
+  plot_data <- tibble(mean = sample_means)
+  
+  p <- ggplot(plot_data, aes(x = mean)) +
+    geom_histogram(bins = 30) +
+    labs(
+      title = paste("Sample Size =", n),
+      x = "Sample Mean",
+      y = "Frequency"
+    )
+  
+  print(p)
+}
+```
 
 # Problem 3:
 
