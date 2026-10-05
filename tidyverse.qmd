@@ -45,17 +45,33 @@ tribble( ~x,    ~y,    ~w,    ~z,
 
 - Use and show a `map` function to find the "mean" of each column of the `dt` data table
 
+```{r}
+map(dt, mean)
+```
+
+
 ## 1_b:
 
 - Use and show a `map` function to find the "standard deviation" of each column of the `dt` data table.
+```{r}
+map(dt, sd)
+```
+
 
 ## 1_c:
 
 - Use and show a map function that will calculate the "square root" of each value of each column of the data table `dt`.
+```{r}
+map(dt, sqrt)
+```
+
 
 ## 1_d:
 
 - Use R code to find the "mean", "max", "1st Quartile", "3rd Quartile", "Median", and "Min" for each column of the `dt` data table. (Hint: You do not have to use a map function)
+```{r}
+summary(dt)
+```
 
 # Problem 2:
 
