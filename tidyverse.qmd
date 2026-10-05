@@ -251,6 +251,25 @@ output
 # Problem 4:
 
 Generate a sequence of dates from **January 1, 2015** to **December 31, 2025**, spaced by every **two months**. Extract the **year**, **quarter**, and **ISO week number** for each date.
+```{r}
+dates <- seq(
+  from = as.Date("2015-01-01"),
+  to = as.Date("2025-12-31"),
+  by = "2 months"
+)
+
+
+date_info <- tibble(
+  date = dates,
+  year = year(dates),
+  quarter = quarter(dates),
+  iso_week = isoweek(dates)
+)
+
+date_info
+
+
+```
 
 # Problem 5
 
