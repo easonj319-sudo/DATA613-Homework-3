@@ -275,9 +275,42 @@ date_info
 
 Given the following dates, compute the difference in **months** and **weeks** between each consecutive pair.
 
-``` r
-sample_dates <- c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05")
+```{r}
+sample_dates <- as.Date(c(
+  "2018-03-15",
+  "2020-07-20",
+  "2023-01-10",
+  "2025-09-05"
+))
+
+sample_dates
 ```
+```{r}
+month_diff <- interval(
+  sample_dates[-length(sample_dates)],
+  sample_dates[-1]
+) %/% months(1)
+
+month_diff
+```
+```{r}
+week_diff <- as.numeric(diff(sample_dates)) / 7
+
+week_diff
+```
+```{r}
+result <- tibble(
+  start_date = sample_dates[-length(sample_dates)],
+  end_date = sample_dates[-1],
+  months = month_diff,
+  weeks = week_diff
+)
+
+result
+```
+
+
+
 
 # Problem 6
 
